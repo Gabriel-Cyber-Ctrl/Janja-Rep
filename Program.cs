@@ -1,5 +1,6 @@
 using Janja.Configs;
 using Janja_V2.Components;
+using Janja_V2.DAO;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,6 +9,8 @@ builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 
 builder.Services.AddScoped<Conexao>();
+builder.Services.AddScoped<ProcessoDAO>();
+
 
 var app = builder.Build();
 

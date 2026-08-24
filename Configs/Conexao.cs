@@ -1,5 +1,5 @@
 ﻿using MySql.Data.MySqlClient;
-namespace Janja.Configs
+namespace Janja_V2.Configs
 {
     public class Conexao
     {
