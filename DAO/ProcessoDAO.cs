@@ -20,7 +20,6 @@ namespace Janja_V2.DAO
                 
                 //Buscando e abrindo a conexão com o banco de dados
                 using var con = _conexao.GetConnection();
-                con.Open();
 
                 string sql = "SELECT * FROM processos";
                 using var comando = con.CreateCommand();
