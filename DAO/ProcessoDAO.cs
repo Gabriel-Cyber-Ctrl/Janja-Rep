@@ -31,7 +31,7 @@ namespace Janja_V2.DAO
                 {
                     var processo = new Processo();
                     processo.Id = leitor.GetInt32("id_pro");
-                    processo.Numero = leitor.GetString("numero_pro");
+                    processo.Numero = leitor.IsDBNull(leitor.GetOrdinal("numero_pro")) ? null : leitor.GetString("numero_pro");
                     processo.Interessado = leitor.GetString("interessado_pro");
                     processo.Assunto = leitor.GetString("assunto_pro");
                     processo.Descricao = leitor.GetString("descricao_pro");
