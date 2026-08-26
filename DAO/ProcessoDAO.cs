@@ -1,4 +1,4 @@
-﻿using Janja.Configs;
+﻿using Janja_V2.Configs;
 using Janja_V2.Models;
 
 namespace Janja_V2.DAO
