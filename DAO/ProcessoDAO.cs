@@ -16,6 +16,7 @@ namespace Janja_V2.DAO
         {
             try
             {
+                
                 var lista = new List<Processo>();
                 
                 //Buscando e abrindo a conexão com o banco de dados
