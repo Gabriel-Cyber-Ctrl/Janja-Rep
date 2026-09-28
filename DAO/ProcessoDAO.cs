@@ -40,8 +40,7 @@ namespace Janja_V2.DAO
                 
                     lista.Add(processo);
                 }
-
-
+                
                 return lista;
             } catch
             {
@@ -49,5 +48,66 @@ namespace Janja_V2.DAO
             }
 
         }
+
+        public void Inserir(Processo processo)
+        {
+            using var con = _conexao.GetConnection();
+
+
+            try{
+            string sql = @"Insert into processos (numero_pro, interessado_pro, assunto_pro, descricao_pro, situacao_pro) 
+                VALUES (@numero, @interessado, @assunto, @descricao, @situacao)";
+                using var comando = con.CreateCommand();
+                comando.CommandText = sql;
+
+                comando.Parameters.AddWithValue("@numero", processo.Numero);
+                comando.Parameters.AddWithValue("@interessado", processo.Interessado);
+                comando.Parameters.AddWithValue("@assunto", processo.Assunto);
+                comando.Parameters.AddWithValue("@descricao", processo.Descricao);
+                comando.Parameters.AddWithValue("@situacao", processo.Situacao);
+
+                comando.ExecuteNonQuery();
+            } catch
+            {
+                throw;
+            }
+        }
+
+        public void Delete(Processo processo)
+        {
+            using var con = _conexao.GetConnection();
+
+            try
+            {
+                string sql = "DELETE FROM processos WHERE id_pro = @id";
+                using var comando = con.CreateCommand();
+                comando.CommandText = sql;
+
+                comando.Parameters.AddWithValue("@id", processo.Id);
+
+                comando.ExecuteNonQuery();
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        public void Edit(Processo processo)
+        {
+            using var con = _conexao.GetConnection();
+
+            try{
+                string sql = @"UPDATE processos 
+                SET numero_pro = @numero, interessado_pro = @interessado, assunto_pro = @assunto, descricao_pro = @descricao, situacao_pro = @situacao WHERE id_pro = @id";
+                using var comando = con.CreateCommand();
+                comando.CommandText = sql;
+
+                comando.Parameters.AddWithValue("@id", processo.Id);
+
+                comando.ExecuteNonQuery();
+            }
+        }
+
     }
 }
