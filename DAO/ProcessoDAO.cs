@@ -97,15 +97,53 @@ namespace Janja_V2.DAO
         {
             using var con = _conexao.GetConnection();
 
-            try{
-                string sql = @"UPDATE processos 
-                SET numero_pro = @numero, interessado_pro = @interessado, assunto_pro = @assunto, descricao_pro = @descricao, situacao_pro = @situacao WHERE id_pro = @id";
+            const string sql = @"UPDATE processos SET numero_pro = @numero, interessado_pro = @interessado, assunto_pro = @assunto, descricao_pro = @descricao, situacao_pro = @situacao WHERE id_pro = @id";
+            
+            using var comando = con.CreateCommand();
+            comando.CommandText = sql;
+
+            comando.Parameters.AddWithValue("@numero", processo.Numero);
+            comando.Parameters.AddWithValue("@interessado", processo.Interessado);
+            comando.Parameters.AddWithValue("@assunto", processo.Assunto);
+            comando.Parameters.AddWithValue("@descricao", processo.Descricao);
+            comando.Parameters.AddWithValue("@situacao", processo.Situacao);
+            comando.Parameters.AddWithValue("@id", processo.Id);
+            comando.ExecuteNonQuery();
+        }
+
+        public Processo? BuscadorId(int Id)
+        {
+            using var con = _conexao.GetConnection();
+
+            try
+            {
+                string sql = @"SELECT id_pro, numero_pro, interessado_pro, assunto_pro, descricao_pro, situacao_pro 
+                                FROM processos WHERE id_pro = @id";
+
                 using var comando = con.CreateCommand();
                 comando.CommandText = sql;
 
-                comando.Parameters.AddWithValue("@id", processo.Id);
+                comando.Parameters.AddWithValue("@id", Id);
 
-                comando.ExecuteNonQuery();
+                using var leitor = comando.ExecuteReader();
+
+                if (!leitor.Read())
+                {
+                    return null;
+                }
+
+                return new Processo{
+                    Id = leitor.GetInt32("id_pro"),
+                    Numero = leitor.GetString("numero_pro"),
+                    Interessado = leitor.GetString("interessado_pro"),
+                    Assunto = leitor.GetString("assunto_pro"),
+                    Descricao = leitor.GetString("descricao_pro"),
+                    Situacao = leitor.GetString("situacao_pro")
+                };
+            }
+            catch
+            {
+                throw;
             }
         }
 
